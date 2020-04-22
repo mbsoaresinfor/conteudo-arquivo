@@ -33,7 +33,7 @@ public class  GeradorLinhaArquivoConfiguracaoPadrao implements GeradorLinhaArqui
 
 	@Override
 	public int getTotalCaracteresLinha() {		
-		return 50;
+		return 400;
 	}
 
 	@Override

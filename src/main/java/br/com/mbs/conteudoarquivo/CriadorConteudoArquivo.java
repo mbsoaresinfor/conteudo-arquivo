@@ -61,7 +61,7 @@ public class CriadorConteudoArquivo {
 
 		private void validaPartesArquivo() {
 			if(cabecalho == null || rodape == null || detalhes.isEmpty()){
-				throw new IllegalArgumentException("Defina o cabecalho, detalhe(s) e o rodape para geracao do conteudo do arquivo");
+				throw new IllegalArgumentException("Defina o cabecalho, detalhe(s) e o rodape para geracao do conteudo do br.com.mbs.conteudoarquivo");
 			}
 		}
 		
