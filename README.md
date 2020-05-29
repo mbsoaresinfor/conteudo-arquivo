@@ -38,7 +38,7 @@ Por definição, temos a entidade na qual é uma classe, que armazena os dados,
 que serão gerados a linha do arquivo. Cada campo da classe, deve usar
 a anotação <code>@Campo</code>, onde essa, defini os posicionamento, na linha do arquivo a ser gerado.
 Após, instaciar a classe, setar os valores e, criar o conteúdo do arquivo,
-através da classe <cod>CriadorConteudoArquivo</code>
+através da classe <code>CriadorConteudoArquivo</code>
 </p>
 <br>
 Foi criado entidades exemplos, para demostrar o uso, conforme abaixo:
