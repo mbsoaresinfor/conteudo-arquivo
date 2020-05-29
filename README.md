@@ -4,33 +4,43 @@ no dia-a-dia dos desenvolvedores, que é o parseamento de dados para
 a geração de arquivos.
 </p>
 
+<p>
 Existem situações que temos informações, onde devemos parsear em determinadas posições
 em um arquivo txt por exemplo.
+</p>
 
+<p>
 Pegamos um caso, onde é necessário gerar um arquivo TXT, com os dados de uma pessoa.
 O arquivo txt, deve ser parseado conforme abaixo:
+</p>
 
-Arquivo:
-Posição: 00..30 (inserir o nome da pessoa)
-Posição: 31..60 (inserir o endereco da pessoa)
-Posição: 61..65 (inserir a idade da pessoa)
+<p>
+Arquivo:<br>
+Posição: 00..30 (inserir o nome da pessoa)<br>
+Posição: 31..60 (inserir o endereco da pessoa)<br>
+Posição: 61..65 (inserir a idade da pessoa)<br>
+</p>
 
+<p>
 Nesse exemplo, os desenvolvedores deveram buscar os dados da pessoa, e realizar o parser em cada posição.
 Isso pode ser algo fácil, para algumas situações, mas pode em outras ser mais complicado.
 Além disso, pode ocorrer a necessidade de também realizar um parser de dados de um Produto, 
 Item, ContaBancaria por exemplo.
-
+</p>
+<p>
 Dessa forma, esse projeto tem o objetivo de facilitar esse trabalho, onde os desenvolvedores,
 terão apenas o trabalho de criar classes com os atributos que devem ser gerados no arquivo e,
 definir as posições que estes, devem ser setados.
 Este projeto não cria o arquivo, ele gera o conteudo do arquivo.
-
+</p>
+<p>
 Por definição, temos a entidade na qual é uma classe, que armazena os dados,
 que serão gerados a linha do arquivo. Cada campo da classe, deve usar
 a anotação @Campo, onde essa, defini os posicionamento, na linha do arquivo a ser gerado.
 Após, instaciar a classe, setar os valores e, criar o conteudo do arquivo,
 através da classe 'CriadorConteudoArquivo'
-
+</p>
+<br>
 Foi criado entidades exemplos, para demostrar o uso, conforme abaixo:
 
 <p>
