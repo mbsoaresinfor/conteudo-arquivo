@@ -31,14 +31,14 @@ Item, ContaBancaria por exemplo.
 Dessa forma, esse projeto tem o objetivo de facilitar esse trabalho, onde os desenvolvedores,
 terão apenas o trabalho de criar classes com os atributos que devem ser gerados no arquivo e,
 definir as posições que estes, devem ser setados.
-Este projeto não cria o arquivo, ele gera o conteudo do arquivo.
+Este projeto não cria o arquivo, ele gera o conteúdo do arquivo.
 </p>
 <p>
 Por definição, temos a entidade na qual é uma classe, que armazena os dados,
 que serão gerados a linha do arquivo. Cada campo da classe, deve usar
-a anotação @Campo, onde essa, defini os posicionamento, na linha do arquivo a ser gerado.
-Após, instaciar a classe, setar os valores e, criar o conteudo do arquivo,
-através da classe 'CriadorConteudoArquivo'
+a anotação <code>@Campo</code>, onde essa, defini os posicionamento, na linha do arquivo a ser gerado.
+Após, instaciar a classe, setar os valores e, criar o conteúdo do arquivo,
+através da classe <cod>CriadorConteudoArquivo</code>
 </p>
 <br>
 Foi criado entidades exemplos, para demostrar o uso, conforme abaixo:
