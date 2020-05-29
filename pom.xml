@@ -3,11 +3,11 @@
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>mbs</groupId>
-  <artifactId>geradorarquivo</artifactId>
+  <artifactId>geradorconteudoarquivo</artifactId>
   <version>0.0.1</version>
   <packaging>jar</packaging>
 
-  <name>geradorarquivo</name>
+  <name>geradorconteudoarquivo</name>
   <url>http://maven.apache.org</url>
 
   <properties>
