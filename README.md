@@ -1,6 +1,8 @@
+<p>
 Esse projeto tem o intuito de facilitar em um problema recorrente
 no dia-a-dia dos desenvolvedores, que é o parseamento de dados para 
 a geração de arquivos.
+</p>
 
 Existem situações que temos informações, onde devemos parsear em determinadas posições
 em um arquivo txt por exemplo.
@@ -31,7 +33,8 @@ através da classe 'CriadorConteudoArquivo'
 
 Foi criado entidades exemplos, para demostrar o uso, conforme abaixo:
 
-...
+<p>
+<code>
 
 public static void main(String[] args) throws Exception {
 		
@@ -112,8 +115,8 @@ public static void main(String[] args) throws Exception {
 		
 	}
 
-...
-
+</code>
+<p>
 
 
 
