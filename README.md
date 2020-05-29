@@ -1,4 +1,4 @@
-<p>
+Por definição, temos a entidade na qual é uma classe, que armazena os dados, onde em cima dessa é gerado a linha do arquivo.<p>
 Esse projeto tem o intuito de facilitar em um problema recorrente
 no dia-a-dia dos desenvolvedores, que é o parseamento de dados para 
 a geração de arquivos.
@@ -34,8 +34,8 @@ definir as posições que estes, devem ser setados.
 Este projeto não cria o arquivo, ele gera o conteúdo do arquivo.
 </p>
 <p>
-Por definição, temos a entidade na qual é uma classe, que armazena os dados,
-que serão gerados a linha do arquivo. Cada campo da classe, deve usar
+Por definição, temos a entidade na qual é uma classe, que armazena os dados, 
+onde em cima dessa é gerado a linha do arquivo.. Cada campo da classe, deve usar
 a anotação <code>@Campo</code>, onde essa, defini os posicionamento, na linha do arquivo a ser gerado.
 Após, instaciar a classe, setar os valores e, criar o conteúdo do arquivo,
 através da classe <code>CriadorConteudoArquivo</code>
