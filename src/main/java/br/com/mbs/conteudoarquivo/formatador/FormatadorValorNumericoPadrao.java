@@ -6,13 +6,9 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import br.com.mbs.conteudoarquivo.annotation.Campo;
-import br.com.mbs.conteudoarquivo.formatador.FormatadorValor;
-
-
-
 
 public class FormatadorValorNumericoPadrao implements FormatadorValor<BigDecimal>{
-	
+
 	private Locale specialLocale ;
 	
 	public FormatadorValorNumericoPadrao(){

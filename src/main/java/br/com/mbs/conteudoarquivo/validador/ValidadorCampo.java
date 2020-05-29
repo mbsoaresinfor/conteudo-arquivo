@@ -7,7 +7,6 @@ import br.com.mbs.conteudoarquivo.GeradorLinhaArquivoConfiguracao;
 
 
 
-
 public abstract class  ValidadorCampo{
 
 	protected GeradorLinhaArquivoConfiguracao configuracao;

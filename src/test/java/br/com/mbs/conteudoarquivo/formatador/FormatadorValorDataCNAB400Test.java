@@ -11,30 +11,36 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import br.com.mbs.conteudoarquivo.annotation.Campo;
+import br.com.mbs.conteudoarquivo.formatador.FormatadorValorDataCNAB400;
 
-
-
-public class FormatadorValorDataPadraoTest {
+public class FormatadorValorDataCNAB400Test {
 
 	@Test
 	public void testFormatacao() throws SecurityException, NoSuchFieldException {
-		FormatadorValorDataPadrao formatador = new FormatadorValorDataPadrao();
+		FormatadorValorDataCNAB400 formatador = new FormatadorValorDataCNAB400();
 		Teste objeto = new Teste();
 		Date date = new Date(); 
 		
-		String ret = formatador.formata(date, retornaAnnotationCampo(objeto,"valor1"));
+		String ret = formatador.formata(date.toGMTString(), retornaAnnotationCampo(objeto,"valor1"));
 		Assert.assertTrue(ret.length() == 6);
 		System.out.println(ret);
 		
 	}
 	
 	
+	@Test(expected=Exception.class)
+	public void testFormatacaoComProblemaParaFormatar() throws SecurityException, NoSuchFieldException {
+		FormatadorValorDataCNAB400 formatador = new FormatadorValorDataCNAB400();
+		Teste objeto = new Teste();
+		Date date = new Date(); 		
+		formatador.formata(date.toString(), retornaAnnotationCampo(objeto,"valor1"));
+	}
 	
 	
 	
 	class Teste{
 		
-		@Campo(tamParteInteira=2,tamParteDecimal=0,posicaoRegistro=1,obrigatorio=true,valorDefault="0",formatadorValor=FormatadorValorDataPadrao.class)
+		@Campo(tamParteInteira=2,tamParteDecimal=0,posicaoRegistro=1,obrigatorio=true,valorDefault="0",formatadorValor=FormatadorValorDataCNAB400.class)
 		private String valor1;
 
 		public String getValor1() {

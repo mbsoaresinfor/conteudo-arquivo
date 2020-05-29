@@ -3,9 +3,7 @@ import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import junit.framework.Assert;
 import org.junit.Test;
-
 import br.com.mbs.conteudoarquivo.annotation.Campo;
-
 
 
 public class FormatadorValorNumericoPadraoTest  {
@@ -32,8 +30,29 @@ public class FormatadorValorNumericoPadraoTest  {
 		ret = format.formata(objeto.getValor4(), retornaAnnotationCampo(objeto,"valor4"));
 		Assert.assertEquals("00034100", ret);
 		
+		Teste1 objeto1 = new Teste1();
+		objeto1.setValor1(new BigDecimal(0));
+		ret = format.formata(objeto1.getValor1(), retornaAnnotationCampo(objeto1,"valor1"));
+		Assert.assertEquals("00000000", ret);
+		
 	}
 	
+	
+class Teste1{
+		
+		@Campo(tamParteInteira=8,tamParteDecimal=0,posicaoRegistro=1,obrigatorio=true,valorDefault="0")
+		private BigDecimal valor1;
+
+		public BigDecimal getValor1() {
+			return valor1;
+		}
+
+		public void setValor1(BigDecimal valor1) {
+			this.valor1 = valor1;
+		}	
+		
+		
+}
 	class Teste{
 		
 		@Campo(tamParteInteira=2,tamParteDecimal=0,posicaoRegistro=1,obrigatorio=true,valorDefault="0")

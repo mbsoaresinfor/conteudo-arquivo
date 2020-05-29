@@ -10,9 +10,8 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import br.com.mbs.conteudoarquivo.CriadorConteudoArquivo;
 import br.com.mbs.conteudoarquivo.annotation.Campo;
-
-
 
 public class CriadorConteudoArquivoTest {
 
@@ -30,8 +29,10 @@ public class CriadorConteudoArquivoTest {
 		 Trailer trailer = new Trailer();
 		 trailer.setValor("a");
 		 
+		 GeradorLinhaArquivoConfiguracaoTest config = new GeradorLinhaArquivoConfiguracaoTest();
+		 GeradorLinhaArquivo gerador = new GeradorLinhaArquivo(config);
 		 
-		String conteudoArquivo = new CriadorConteudoArquivo.Criador().
+		String conteudoArquivo = new CriadorConteudoArquivo.Criador(gerador).
 				adicionaCabecalho(cabecalho).
 				adicionaDetalhes(detalhe).
 				adicionaRodape(trailer).
@@ -39,7 +40,7 @@ public class CriadorConteudoArquivoTest {
 		
 		int totalPartesArquivo = 3;
 		int totalCaracteresPorLinhaCNAB400 = 400;
-		int quantidadeNovasLinhas = 2;
+		int quantidadeNovasLinhas = totalPartesArquivo -1;
 		int experado = totalPartesArquivo * totalCaracteresPorLinhaCNAB400 + quantidadeNovasLinhas;
 		Assert.assertEquals(experado, conteudoArquivo.length());
 		System.out.println(conteudoArquivo);
@@ -65,8 +66,10 @@ public class CriadorConteudoArquivoTest {
 		 Trailer trailer = new Trailer();
 		 trailer.setValor("a");
 		 
+		 GeradorLinhaArquivoConfiguracaoTest config = new GeradorLinhaArquivoConfiguracaoTest();
+		 GeradorLinhaArquivo gerador = new GeradorLinhaArquivo(config);
 		 
-		String conteudoArquivo = new CriadorConteudoArquivo.Criador().
+		String conteudoArquivo = new CriadorConteudoArquivo.Criador(gerador).
 				adicionaCabecalho(cabecalho).
 				adicionaDetalhes(listaDetalhes).
 				adicionaRodape(trailer).
@@ -84,7 +87,7 @@ public class CriadorConteudoArquivoTest {
 	
 	class Cabecalho implements Serializable{
 		
-		@Campo(tamParteInteira=10,tamParteDecimal=0,posicaoRegistro=1,obrigatorio=true,valorDefault="cabecalho")
+		@Campo(tamParteInteira=10,tamParteDecimal=0,posicaoRegistro=1,obrigatorio=true,valorDefault="CabecalhoExemplo")
 		private String valor;
 
 		public String getValor() {

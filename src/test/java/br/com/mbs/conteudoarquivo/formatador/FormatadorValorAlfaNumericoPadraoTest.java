@@ -3,7 +3,6 @@ package br.com.mbs.conteudoarquivo.formatador;
 import java.lang.reflect.Field;
 import junit.framework.Assert;
 import org.junit.Test;
-
 import br.com.mbs.conteudoarquivo.annotation.Campo;
 
 
@@ -30,6 +29,17 @@ public class FormatadorValorAlfaNumericoPadraoTest {
 		ret = format.formata(teste.getNome1(),retornaAnnotationCampo(teste,"nome1"));
 		Assert.assertEquals("BRASIL         ", ret);
 		
+	}
+	
+	@Test
+	public void testFormatComValorMaiorqueDefinido() throws SecurityException, NoSuchFieldException{
+		FormatadorValorAlfaNumericoPadrao format = new FormatadorValorAlfaNumericoPadrao();
+		Teste teste = new Teste();
+		teste.setNome("12345678901");
+		String ret = format.formata(teste.getNome(),retornaAnnotationCampo(teste,"nome"));
+		Assert.assertEquals("1234567890", ret);
+		
+		
 	}	
 	
 	class Teste{
@@ -37,7 +47,7 @@ public class FormatadorValorAlfaNumericoPadraoTest {
 		@Campo(tamParteInteira=10,tamParteDecimal=0,posicaoRegistro=1,obrigatorio=true,valorDefault="TESTE")
 		private String nome;
 		
-		@Campo(tamParteInteira=15,tamParteDecimal=0,posicaoRegistro=5,obrigatorio=true,valorDefault="")
+		@Campo(tamParteInteira=15,tamParteDecimal=0,posicaoRegistro=11,obrigatorio=true,valorDefault="")
 		private String nome1;
 
 		public String getNome() {

@@ -6,7 +6,6 @@ import java.io.Serializable;
 import br.com.mbs.conteudoarquivo.GeradorLinhaArquivoConfiguracao;
 
 
-
 public abstract class  ValidadorEntidade{
 
 	protected GeradorLinhaArquivoConfiguracao configuracao;

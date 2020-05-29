@@ -1,18 +1,14 @@
 package br.com.mbs.conteudoarquivo.validador;
 
 import static org.junit.Assert.*;
-
 import java.io.Serializable;
 import java.lang.reflect.Field;
-
 import junit.framework.Assert;
-
 import org.junit.Test;
-
 import br.com.mbs.conteudoarquivo.GeradorLinhaArquivoConfiguracao;
 import br.com.mbs.conteudoarquivo.GeradorLinhaArquivoConfiguracaoPadrao;
 import br.com.mbs.conteudoarquivo.annotation.Campo;
-
+import br.com.mbs.conteudoarquivo.validador.ValidadorEntidadePadrao;
 
 public class ValidadorEntidadePadraoTest {
 
@@ -37,10 +33,25 @@ public class ValidadorEntidadePadraoTest {
 		 }
 	}
 	
+	@Test(expected=Exception.class)
+	public void testValoresSobrescritoDaAnotacaoCAmpo() throws Exception {	
+		validadorEntidadePadrao.valida(new Teste3());
+	}
+	
+	@Test(expected=Exception.class)
+	public void testValoresSobrescritoDaAnotacaoCAmpo2() throws Exception {	
+		validadorEntidadePadrao.valida(new Teste4());
+	}
+	
+	@Test(expected=Exception.class)
+	public void testValoresSobrescritoDaAnotacaoCAmpo3() throws Exception {	
+		validadorEntidadePadrao.valida(new Teste5());
+	}
+	
 	
 	class Teste1 implements Serializable{
 		
-		@Campo(tamParteInteira=400,tamParteDecimal=0,posicaoRegistro=3,obrigatorio=true,valorDefault="REMESSA")
+		@Campo(tamParteInteira=50,tamParteDecimal=0,posicaoRegistro=0,obrigatorio=true,valorDefault="REMESSA")
 		private String teste1;
 		
 		
@@ -81,6 +92,89 @@ public class ValidadorEntidadePadraoTest {
 			this.teste2 = teste2;
 		}		
 	}
+	
+class Teste3 implements Serializable{
+	
+		@Campo(tamParteInteira=1,tamParteDecimal=0,posicaoRegistro=1,obrigatorio=true,valorDefault="REMESSA")
+		private String teste1;
+		
+		@Campo(tamParteInteira=1,tamParteDecimal=0,posicaoRegistro=1,obrigatorio=true,valorDefault="abc")
+		private String teste2;
+		
+		
+
+		public String getTeste1() {
+			return teste1;
+		}
+
+		public void setTeste1(String teste1) {
+			this.teste1 = teste1;
+		}
+
+		public String getTeste2() {
+			return teste2;
+		}
+
+		public void setTeste2(String teste2) {
+			this.teste2 = teste2;
+		}
+
+		
+		
+				
+	}
+
+class Teste4 implements Serializable{
+	
+	@Campo(tamParteInteira=10,tamParteDecimal=0,posicaoRegistro=1,obrigatorio=true,valorDefault="REMESSA")
+	private String teste1;
+	
+	@Campo(tamParteInteira=1,tamParteDecimal=0,posicaoRegistro=5,obrigatorio=true,valorDefault="abc")
+	private String teste2;
+	
+	public String getTeste1() {
+		return teste1;
+	}
+
+	public void setTeste1(String teste1) {
+		this.teste1 = teste1;
+	}
+
+	public String getTeste2() {
+		return teste2;
+	}
+
+	public void setTeste2(String teste2) {
+		this.teste2 = teste2;
+	}	
+			
+}
+
+class Teste5 implements Serializable{
+	
+	@Campo(tamParteInteira=10,tamParteDecimal=0,posicaoRegistro=1,obrigatorio=true,valorDefault="REMESSA")
+	private String teste1;
+	
+	@Campo(tamParteInteira=1,tamParteDecimal=0,posicaoRegistro=10,obrigatorio=true,valorDefault="abc")
+	private String teste2;
+	
+	public String getTeste1() {
+		return teste1;
+	}
+
+	public void setTeste1(String teste1) {
+		this.teste1 = teste1;
+	}
+
+	public String getTeste2() {
+		return teste2;
+	}
+
+	public void setTeste2(String teste2) {
+		this.teste2 = teste2;
+	}	
+			
+}
 	
 	private Field retornaAnnotationCampo(Object obj,String nameCampo) throws SecurityException, NoSuchFieldException{		
 		Field field = null;

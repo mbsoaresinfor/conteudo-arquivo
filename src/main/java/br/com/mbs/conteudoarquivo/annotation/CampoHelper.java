@@ -3,23 +3,9 @@ package br.com.mbs.conteudoarquivo.annotation;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.Date;
 
 
 public class CampoHelper {
-	
-	
-	public Date  retornaValorData(Field field,Serializable obj) {
-		Date retorno = null;
-		try{
-			field.setAccessible(true);
-			Campo annotation = field.getAnnotation(Campo.class);
-			retorno = (Date) field.get(obj) != null ? (Date) field.get(obj) : new Date(annotation.valorDefault());			
-		}catch(Exception e){
-			throw new RuntimeException("Nao foi possivel retornar o valor em Date para o campo " + field.getName() + " da classe " + obj.getClass().getName());
-		}
-		return retorno;
-	}
 	
 	public BigDecimal  retornaValorNumerico(Field field,Serializable obj) {
 		BigDecimal retorno = null;
@@ -28,7 +14,7 @@ public class CampoHelper {
 			Campo annotation = field.getAnnotation(Campo.class);
 			retorno = (BigDecimal) field.get(obj) != null ? (BigDecimal) field.get(obj) : new BigDecimal(annotation.valorDefault());			
 		}catch(Exception e){
-			throw new RuntimeException("Nao foi possivel retornar o valor em BigDecimal para o campo " + field.getName() + " da classe " + obj.getClass().getName());
+			throw new RuntimeException("N�o foi possivel retornar o valor em BigDecimal para o campo " + field.getName() + " da classe " + obj.getClass().getName());
 		}
 		return retorno;
 	}
@@ -61,5 +47,9 @@ public class CampoHelper {
 	
 	public Campo getAnnotationCampo(Field field){
 		return  field.getAnnotation(Campo.class);
+	}
+	
+	public boolean temAnnotationCampo(Field field) {
+		return getAnnotationCampo(field) == null ? false : true;
 	}
 }

@@ -3,7 +3,7 @@ package br.com.mbs.conteudoarquivo.annotation;
 import java.lang.annotation.*;
 
 import br.com.mbs.conteudoarquivo.formatador.FormatadorValor;
-import br.com.mbs.conteudoarquivo.formatador.FormatadorValorNaoDefinido; 
+import br.com.mbs.conteudoarquivo.formatador.FormatadorValorNaoDefinido;
 
 @Retention(RetentionPolicy.RUNTIME)  
 @Target(ElementType.FIELD)  

@@ -1,17 +1,19 @@
 package br.com.mbs.conteudoarquivo;
 
 import br.com.mbs.conteudoarquivo.formatador.FormatadorValor;
-import br.com.mbs.conteudoarquivo.validador.ValidadorCampo;
-import br.com.mbs.conteudoarquivo.validador.ValidadorEntidade;
 
+/**
+ * Configuracao de um GeradorLinhaArquivo
+ * 
+ * @author marcelo.soares
+ *
+ */
 public interface GeradorLinhaArquivoConfiguracao {
 
 	public FormatadorValor getFormatadorValorAlfaNumerico();
 	
 	public FormatadorValor getFormatadorValorNumerico();
 	
-	public FormatadorValor getFormatadorData();
-
 	
 	public int getTotalCaracteresLinha();
 	

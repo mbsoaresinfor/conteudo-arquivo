@@ -5,6 +5,9 @@ import java.math.BigDecimal;
 import org.junit.Assert;
 import org.junit.Test;
 
+import br.com.mbs.conteudoarquivo.annotation.Campo;
+import br.com.mbs.conteudoarquivo.annotation.CampoHelper;
+
 public class CampoHelperTest {
 
 	private CampoHelper campoHelper = new CampoHelper();

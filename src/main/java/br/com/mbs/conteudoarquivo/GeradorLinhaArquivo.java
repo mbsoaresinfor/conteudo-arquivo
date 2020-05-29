@@ -3,10 +3,7 @@ package br.com.mbs.conteudoarquivo;
 import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
-import java.util.Date;
-
 import javax.management.RuntimeErrorException;
-
 import br.com.mbs.conteudoarquivo.annotation.Campo;
 import br.com.mbs.conteudoarquivo.annotation.CampoHelper;
 import br.com.mbs.conteudoarquivo.formatador.FormatadorValor;
@@ -16,76 +13,88 @@ import br.com.mbs.conteudoarquivo.validador.ValidadorCampoPadrao;
 import br.com.mbs.conteudoarquivo.validador.ValidadorEntidade;
 import br.com.mbs.conteudoarquivo.validador.ValidadorEntidadePadrao;
 
-
+/**
+ * Essa classe é a responsavel por fazer o parser de um objeto e gerar uma linha, contendo uma string
+ * 
+ * @author marcelo.soares
+ *
+ */
 public class GeradorLinhaArquivo {
 
 	
+	private GeradorConteudoArquivoLog log = new GeradorConteudoArquivoLog();
 	private CampoHelper campoHelper = new CampoHelper();	
 	private GeradorLinhaArquivoConfiguracao geradorLinhaArquivoConfiguracao;
 	private ValidadorCampo validadorCampoPadrao ;
-	private ValidadorEntidade validadorEntidade ;
+	private ValidadorEntidade validadorEntidade;
 	
-	
+	/**
+	 * Cria o GeradorLinhaArquivo, com as configuracoes padroes
+	 */
 	public GeradorLinhaArquivo(){
 		this(new GeradorLinhaArquivoConfiguracaoPadrao());
 	}
 	
+	/**
+	 * Cria um GeradorLinhaArquivo
+	 * @param geradorLinhaArquivoConfiguracao Seta um GeradorLinhaArquivoConfiguracao
+	 */
 	public GeradorLinhaArquivo(GeradorLinhaArquivoConfiguracao geradorLinhaArquivoConfiguracao){
 		this.geradorLinhaArquivoConfiguracao = geradorLinhaArquivoConfiguracao;
 		validadorCampoPadrao = new ValidadorCampoPadrao(geradorLinhaArquivoConfiguracao);
-		validadorEntidade = new ValidadorEntidadePadrao(geradorLinhaArquivoConfiguracao);
+		validadorEntidade = new ValidadorEntidadePadrao(geradorLinhaArquivoConfiguracao);		
 	}
 	
-	
+	/**
+	 * Cria uma linha, baseado no conteudo de uma entidade
+	 * @param entidade Entidade que vai ser processada
+	 * @return Uma linha, contendo o conteudo da entidade
+	 * @throws Exception Qualquer erro no parser da entidade.
+	 */
 	public String criar(Serializable entidade)throws Exception{		
 		
-		validadorEntidade.valida(entidade);
+		StringBuffer linha = null;
 		
-		StringBuffer linha = criaLinha();
+		try {
+			
+			log.inicioProcessamentoEntidade(entidade);			
+			validadorEntidade.valida(entidade);			
+			linha = criaLinha();			
+			processaLinhas(entidade, linha);			
+			log.fimProcessamentoEntidade(entidade);
+			
+		}catch(Exception e) {
+			log.printStackTrace(e);
+			throw e;
+		}
 		
+		return linha.toString();		
+	}
+
+	private void processaLinhas(Serializable entidade, StringBuffer linha) throws Exception {
 		for(Field field:  entidade.getClass().getDeclaredFields()){
 			Campo annotation = field.getAnnotation(Campo.class);
 			if(annotation != null){
-				logProcessamentoLinha("iniciando ", field, linha);
-				try {
-					processa(linha,field,entidade);
-				}catch(Exception e) {
-					System.out.println("Error na entidade: " + entidade.getClass().getSimpleName() + "\n" + e.getMessage());
-					throw e;
-				}finally {
-					logProcessamentoLinha("finalizado ", field, linha);
+				try{
+					log.logProcessamentoLinha("INICIANDO ", field, linha);
+					processaLinha(linha,field,entidade);
+					log.logProcessamentoLinha("FINALIZADO ", field, linha);
+					
+				}catch(Exception e){
+					log.printStackTrace(e);
+					geraExcessaoErrorProcessamentoEntidade(entidade, field, e);
 				}
-								
 			}			
-		}		
-		return linha.toString();		
+		}
+	}
+
+	private void geraExcessaoErrorProcessamentoEntidade(Serializable entidade, Field field, Exception e)
+			throws Exception {
+		String messageError = "Error na entidade "+ entidade.getClass().getSimpleName() + " Campo: " + field.getName()  
+				+ "\n"+ e.getMessage();
+		throw new Exception(messageError,e);
 	}
 	
-	private void logProcessamentoLinha(String mensagemInicial,Field field,StringBuffer linha){
-		StringBuilder mensagem = new StringBuilder("# " + mensagemInicial + ":");
-		mensagem.append(" Campo: ").append(field.getName());
-		mensagem.append(" Tamanho Linha: ").append(linha.length());		
-		System.out.println(mensagem.toString());
-	}
-	
-	private void logInformacoesDoValor(String valorOriginal,String valorFormatado,int indexInicio,int indexFim,Campo campo){
-		StringBuilder mensagem = new StringBuilder();
-		mensagem.append("Valor Original: [").append(valorOriginal).append("]");
-		mensagem.append("\n");
-		mensagem.append("Valor Formatado: [").append(valorFormatado).append("]");
-		mensagem.append("\n");
-		mensagem.append("Index inicio: ").append(indexInicio);
-		mensagem.append(" Index Fim: ").append(indexFim);
-		mensagem.append("\n");
-		mensagem.append("Informacoes da anotatation " + Campo.class.getSimpleName() + ":");		
-		mensagem.append(" posicaoRegistro: ").append(campo.posicaoRegistro());
-		mensagem.append(" tamParteInteira: ").append(campo.tamParteInteira());
-		mensagem.append(" tamParteDecimal: ").append(campo.tamParteDecimal());
-		mensagem.append(" obrigatorio: ").append(campo.obrigatorio());
-		mensagem.append(" valorDefault: ").append(campo.valorDefault());
-		mensagem.append(" formatadorValor: ").append(campo.formatadorValor());		
-		System.out.println(mensagem.toString());
-	}
 	
 	private StringBuffer criaLinha(){
 		int tam = geradorLinhaArquivoConfiguracao.getTotalCaracteresLinha();
@@ -96,10 +105,9 @@ public class GeradorLinhaArquivo {
 		return linha;
 	}
 	
-	private void processa(StringBuffer linha,Field field,Serializable obj) throws Exception{
+	private void processaLinha(StringBuffer linha,Field field,Serializable obj) throws Exception{
 		
 		field.setAccessible(true);
-		
 		
 		if(eTipoAlfaNumerico(field)){
 
@@ -113,14 +121,9 @@ public class GeradorLinhaArquivo {
 			validadorCampoPadrao.validaAntes(field,valor.toPlainString());
 			setaValorNumericoNaLinha(linha, field, valor);
 			
-		}else if(eTipoData(field)) {
-			Date valor = campoHelper.retornaValorData(field, obj);
-			validadorCampoPadrao.validaAntes(field,valor.toGMTString());
-			setaValorDataNaLinha(linha,field,valor);
-			
 		}else{
 			throw new IllegalArgumentException("Tipo de dado do campo [" + field.getName() + "] esta invalido. \n"+
-					"Tipo de dados validos: [String para AlfhaNumerico, BigDecimal para Numericos, java.util.Date para Data]");
+					"Tipo de dados validos: [String para AlfhaNumerico e BigDecimal para Numericos]");
 		}
 	}
 	
@@ -140,32 +143,10 @@ public class GeradorLinhaArquivo {
 		validadorCampoPadrao.validaApos(field,valorFormatador);
 				 
 		int inicio 	= campoHelper.getPosicaoRegistro(campoHelper.getAnnotationCampo(field));
-		int end = campoHelper.getIndexFinalParteInteira(campoHelper.getAnnotationCampo(field));
-		logInformacoesDoValor(valor, valorFormatador, inicio, end,campoHelper.getAnnotationCampo(field));
+		int end = campoHelper.getIndexFinalParteInteira(campoHelper.getAnnotationCampo(field));		
+		log.logInformacoesDoValor(valor, valorFormatador, inicio, end,campoHelper.getAnnotationCampo(field));
 		linha.replace(inicio,end, valorFormatador.toString());
 	}
-	
-	@SuppressWarnings("unchecked")
-	private void setaValorDataNaLinha(StringBuffer linha,Field field,Date valor) throws Exception{
-		
-		String valorFormatador = "NULL";
-		boolean temFormatador = campoHelper.getAnnotationCampo(field).formatadorValor() != FormatadorValorNaoDefinido.class ;
-		if(temFormatador){
-			FormatadorValor<Date> formatador = criaInstanceFormatadorValor(campoHelper.getAnnotationCampo(field).formatadorValor());
-			valorFormatador = formatador.formata(valor, campoHelper.getAnnotationCampo(field) );
-		}else{
-			valorFormatador = geradorLinhaArquivoConfiguracao.getFormatadorData().
-					formata(valor, campoHelper.getAnnotationCampo(field));			
-		}
-		
-		validadorCampoPadrao.validaApos(field,valorFormatador);
-				 
-		int inicio 	= campoHelper.getPosicaoRegistro(campoHelper.getAnnotationCampo(field));
-		int end = campoHelper.getIndexFinalParteInteira(campoHelper.getAnnotationCampo(field));
-		logInformacoesDoValor(valor.toGMTString(), valorFormatador, inicio, end,campoHelper.getAnnotationCampo(field));
-		linha.replace(inicio,end, valorFormatador.toString());
-	}
-	
 	
 	@SuppressWarnings("unchecked")
 	private void setaValorNumericoNaLinha(StringBuffer linha,Field field,BigDecimal valor) throws Exception{
@@ -182,8 +163,8 @@ public class GeradorLinhaArquivo {
 		validadorCampoPadrao.validaApos(field,valorFormatador);
 				
 		int inicio 	= campoHelper.getPosicaoRegistro(campoHelper.getAnnotationCampo(field));
-		int end = campoHelper.getIndexFinalParteInteira(campoHelper.getAnnotationCampo(field)) + campoHelper.getAnnotationCampo(field).tamParteDecimal();
-		logInformacoesDoValor(valor.toPlainString(), valorFormatador, inicio, end,campoHelper.getAnnotationCampo(field));
+		int end = campoHelper.getIndexFinalParteInteira(campoHelper.getAnnotationCampo(field)) + campoHelper.getAnnotationCampo(field).tamParteDecimal();		
+		log.logInformacoesDoValor(valor.toPlainString(), valorFormatador, inicio, end,campoHelper.getAnnotationCampo(field));
 		linha.replace(inicio,end, valorFormatador.toString());		
 	}
 	
@@ -208,10 +189,6 @@ public class GeradorLinhaArquivo {
 	
 	private boolean eTipoAlfaNumerico(Field field){
 		return field.getType() == String.class ? true : false;
-	}
-	
-	private boolean eTipoData(Field field){
-		return field.getType() == Date.class ? true : false;
 	}
 	
 	

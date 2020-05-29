@@ -6,12 +6,13 @@ import java.math.BigDecimal;
 import junit.framework.Assert;
 import org.junit.Test;
 
+import br.com.mbs.conteudoarquivo.GeradorLinhaArquivo;
 import br.com.mbs.conteudoarquivo.annotation.Campo;
-
 
 public class GeradorLinhaArquivoTest {
 
-	private GeradorLinhaArquivo geradorLinhaArquivo = new GeradorLinhaArquivo();
+	GeradorLinhaArquivoConfiguracaoTest config = new GeradorLinhaArquivoConfiguracaoTest();	 
+	private GeradorLinhaArquivo geradorLinhaArquivo = new GeradorLinhaArquivo(config);
 
 	
 	@Test
