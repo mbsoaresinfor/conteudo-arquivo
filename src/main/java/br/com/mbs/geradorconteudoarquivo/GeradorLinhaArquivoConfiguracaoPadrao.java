@@ -5,10 +5,6 @@ import java.math.BigDecimal;
 import br.com.mbs.geradorconteudoarquivo.formatador.FormatadorValor;
 import br.com.mbs.geradorconteudoarquivo.formatador.FormatadorValorAlfaNumericoPadrao;
 import br.com.mbs.geradorconteudoarquivo.formatador.FormatadorValorNumericoPadrao;
-import br.com.mbs.geradorconteudoarquivo.validador.ValidadorCampo;
-import br.com.mbs.geradorconteudoarquivo.validador.ValidadorCampoPadrao;
-import br.com.mbs.geradorconteudoarquivo.validador.ValidadorEntidade;
-import br.com.mbs.geradorconteudoarquivo.validador.ValidadorEntidadePadrao;
 
 /**
  * GeradorLinhaArquivoConfiguracao padrao
@@ -20,8 +16,6 @@ public class  GeradorLinhaArquivoConfiguracaoPadrao implements GeradorLinhaArqui
 
 	private FormatadorValor<String> formatadorValorAlfaNumericoPadrao = new FormatadorValorAlfaNumericoPadrao();
 	private FormatadorValor<BigDecimal> formatadorValorNumericoPadrao = new FormatadorValorNumericoPadrao();
-	private ValidadorCampo validadorCampoPadrao = new ValidadorCampoPadrao(this);
-	private ValidadorEntidade validadorEntidade = new ValidadorEntidadePadrao(this);
 	
 	@Override
 	public FormatadorValor<String> getFormatadorValorAlfaNumerico() {		

@@ -12,8 +12,7 @@ public interface GeradorLinhaArquivoConfiguracao {
 
 	public FormatadorValor getFormatadorValorAlfaNumerico();
 	
-	public FormatadorValor getFormatadorValorNumerico();
-	
+	public FormatadorValor getFormatadorValorNumerico();	
 	
 	public int getTotalCaracteresLinha();
 	

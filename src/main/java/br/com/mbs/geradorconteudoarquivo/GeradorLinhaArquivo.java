@@ -4,7 +4,6 @@ import java.io.Serializable;
 import java.lang.reflect.Field;
 import java.math.BigDecimal;
 import javax.management.RuntimeErrorException;
-
 import br.com.mbs.geradorconteudoarquivo.annotation.Campo;
 import br.com.mbs.geradorconteudoarquivo.annotation.CampoHelper;
 import br.com.mbs.geradorconteudoarquivo.formatador.FormatadorValor;
@@ -23,7 +22,7 @@ import br.com.mbs.geradorconteudoarquivo.validador.ValidadorEntidadePadrao;
 public class GeradorLinhaArquivo {
 
 	
-	private GeradorConteudoArquivoLog log = new GeradorConteudoArquivoLog();
+	private GeradorArquivoLog log = new GeradorArquivoLog();
 	private CampoHelper campoHelper = new CampoHelper();	
 	private GeradorLinhaArquivoConfiguracao geradorLinhaArquivoConfiguracao;
 	private ValidadorCampo validadorCampoPadrao ;
@@ -144,9 +143,9 @@ public class GeradorLinhaArquivo {
 		validadorCampoPadrao.validaApos(field,valorFormatador);
 				 
 		int inicio 	= campoHelper.getPosicaoRegistro(campoHelper.getAnnotationCampo(field));
-		int end = campoHelper.getIndexFinalParteInteira(campoHelper.getAnnotationCampo(field));		
-		log.logInformacoesDoValor(valor, valorFormatador, inicio, end,campoHelper.getAnnotationCampo(field));
-		linha.replace(inicio,end, valorFormatador.toString());
+		int fim = campoHelper.getIndexFinalParteInteira(campoHelper.getAnnotationCampo(field));		
+		log.logInformacoesDoValor(valor, valorFormatador, inicio, fim,campoHelper.getAnnotationCampo(field));
+		linha.replace(inicio,fim, valorFormatador.toString());
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -164,9 +163,9 @@ public class GeradorLinhaArquivo {
 		validadorCampoPadrao.validaApos(field,valorFormatador);
 				
 		int inicio 	= campoHelper.getPosicaoRegistro(campoHelper.getAnnotationCampo(field));
-		int end = campoHelper.getIndexFinalParteInteira(campoHelper.getAnnotationCampo(field)) + campoHelper.getAnnotationCampo(field).tamParteDecimal();		
-		log.logInformacoesDoValor(valor.toPlainString(), valorFormatador, inicio, end,campoHelper.getAnnotationCampo(field));
-		linha.replace(inicio,end, valorFormatador.toString());		
+		int fim = campoHelper.getIndexFinalParteInteira(campoHelper.getAnnotationCampo(field)) + campoHelper.getAnnotationCampo(field).tamParteDecimal();		
+		log.logInformacoesDoValor(valor.toPlainString(), valorFormatador, inicio, fim,campoHelper.getAnnotationCampo(field));
+		linha.replace(inicio,fim, valorFormatador.toString());		
 	}
 	
 	

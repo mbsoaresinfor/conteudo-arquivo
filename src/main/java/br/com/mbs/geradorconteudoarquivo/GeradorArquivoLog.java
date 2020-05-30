@@ -7,7 +7,7 @@ import org.apache.log4j.Logger;
 
 import br.com.mbs.geradorconteudoarquivo.annotation.Campo;
 
-class GeradorConteudoArquivoLog {
+class GeradorArquivoLog {
 
 	private static final Logger LOGGER = Logger.getLogger(GeradorLinhaArquivo.class);
 	
