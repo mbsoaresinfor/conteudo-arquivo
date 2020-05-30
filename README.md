@@ -1,17 +1,11 @@
-Por definição, temos a entidade na qual é uma classe, que armazena os dados, onde em cima dessa é gerado a linha do arquivo.<p>
+
 Esse projeto tem o intuito de facilitar em um problema recorrente
 no dia-a-dia dos desenvolvedores, que é o parseamento de dados para 
 a geração de arquivos.
 </p>
 
 <p>
-Existem situações que temos informações, onde devemos parsear em determinadas posições
-em um arquivo txt por exemplo.
-</p>
-
-<p>
-Pegamos um caso, onde é necessário gerar um arquivo TXT, com os dados de uma pessoa.
-O arquivo txt, deve ser parseado conforme abaixo:
+Existem situações que temos informações, onde devemos parsear em determinadas posições por exemplo, em um arquivo.  Pegando um caso concreto, onde é necessário gerar um arquivo TXT, com os dados de uma pessoa, na qual o mesmo deve ser parseado conforme abaixo:
 </p>
 
 <p>
